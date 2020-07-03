@@ -1,0 +1,52 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class weaponChange : MonoBehaviour
+{
+    int selectedWeapon = 0;
+    int previousWeapon;
+    void Start()
+    {
+        selectedWeapon = 0;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        previousWeapon = selectedWeapon;
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            selectedWeapon = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            selectedWeapon = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            selectedWeapon = 2;
+        }
+        if(previousWeapon!=selectedWeapon)
+        {
+            selectWeapon();
+        }
+    }
+
+    void selectWeapon()
+    {
+        int i = 0;
+        foreach(Transform weapon in transform)
+        {
+            if(i==selectedWeapon)
+            {
+                weapon.gameObject.SetActive(true);
+            }
+            else
+            {
+                weapon.gameObject.SetActive(false);
+            }
+            i++;
+        }
+    }
+}
