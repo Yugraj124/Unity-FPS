@@ -11,33 +11,34 @@ public class Gun : MonoBehaviour
     public Transform cam;
     public float force = 15f;
     public LayerMask interactable;
-    public bool isBurst=true;
+    public bool isAutomatic=true;
     public int range = 100;
+
+    Animator animator;
 
     float nextTimeToShoot = 0;
     bool canShoot=true;
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if(Input.GetMouseButton(0)&&Time.time>=nextTimeToShoot&&(isBurst||canShoot))
+        if(Input.GetMouseButton(0) && Time.time >= nextTimeToShoot && (isAutomatic||canShoot))
         {
             canShoot = false;
             nextTimeToShoot = Time.time + 1 / (float)fireRate;
             shoot();
-            
         }
-        if(Input.GetMouseButtonUp(0)&&!isBurst)
+        if(Input.GetMouseButtonUp(0) && !isAutomatic)
         {
             canShoot = true;
         }
     }
+
     void shoot()
     {
         muzzleFlash.Play();
@@ -51,5 +52,11 @@ public class Gun : MonoBehaviour
             rb.AddForce(force * hit.normal*-1,ForceMode.Impulse);
         }
 
+    }
+
+    private void OnEnable()
+    {
+        animator.SetBool("onHand", true);
+        nextTimeToShoot = Time.time + 0.5f;
     }
 }
