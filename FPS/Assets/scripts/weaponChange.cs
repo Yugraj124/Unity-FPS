@@ -27,7 +27,11 @@ public class weaponChange : MonoBehaviour
         {
             selectedWeapon = 2;
         }
-        if(previousWeapon!=selectedWeapon)
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            selectedWeapon = 3;
+        }
+        if (previousWeapon!=selectedWeapon)
         {
             selectWeapon();
         }
