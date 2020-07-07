@@ -48,7 +48,7 @@ public class Gun : MonoBehaviour
             interact target=hit.transform.GetComponent<interact>();
             target.Damage(damage);
             target.Hit(hit.point, Quaternion.LookRotation(hit.normal));
-            Rigidbody rb = hit.rigidbody;
+            Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
             rb.AddForce(force * hit.normal*-1,ForceMode.Impulse);
         }
 
