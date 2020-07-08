@@ -22,12 +22,13 @@ public class GrenadeThrower : MonoBehaviour
         {
              grenade = Instantiate(grenadePrefab, transform.position, transform.rotation);
             rb = grenade.GetComponent<Rigidbody>();
-            rb.useGravity = false;
+            Destroy(rb);
             grenade.transform.parent = gameObject.transform;
         }
         if(Input.GetMouseButtonUp(0))
         {
             grenade.transform.parent = null;
+            rb = grenade.AddComponent<Rigidbody>();
             rb.useGravity = true;
             rb.AddForce(force * Camera.main.transform.forward, ForceMode.VelocityChange);
         }
