@@ -11,18 +11,28 @@ public class Grenade : MonoBehaviour
     public float explosionForce = 500f;
 
     float timeToExplode;
+    bool isLive = false;
 
-    // Start is called before the first frame update
-    void Start()
+    #region Properties
+
+    public float TimeToExplode
     {
-        timeToExplode = fuseTime;
+        set { timeToExplode = value; }
     }
+
+    public bool IsLive
+    {
+        get { return isLive; }
+        set { isLive = value; }
+    }
+
+    #endregion
 
     // Update is called once per frame
     void Update()
     {
         timeToExplode -= Time.deltaTime;
-        if(timeToExplode<=0)
+        if(isLive && timeToExplode <= 0)
         {
             GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             Collider[] colliders = Physics.OverlapSphere(transform.position, effectRadius);

@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 455755443}
   - component: {fileID: 455755444}
   m_Layer: 11
-  m_Name: Grenade
+  m_Name: GrenadeThrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,6 +301,7 @@ MonoBehaviour:
   grenadePrefab: {fileID: 4757463984983219216, guid: e65f6c6e40912314eba1969b1880f0ff,
     type: 3}
   force: 15
+  cooldown: 0.4
 --- !u!1 &582922122 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1395889678564011485, guid: f5fbe9f63f829524daee63862827bc07,
