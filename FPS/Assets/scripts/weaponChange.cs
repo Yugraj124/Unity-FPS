@@ -6,6 +6,12 @@ public class weaponChange : MonoBehaviour
 {
     int selectedWeapon = 0;
     int previousWeapon;
+
+    public int SelectedWeapon
+    {
+        set { selectedWeapon = value; }
+    }
+
     void Start()
     {
         selectedWeapon = 0;
@@ -31,18 +37,18 @@ public class weaponChange : MonoBehaviour
         {
             selectedWeapon = 3;
         }
-        if (previousWeapon!=selectedWeapon)
+        if (previousWeapon != selectedWeapon)
         {
             selectWeapon();
         }
     }
 
-    void selectWeapon()
+    public void selectWeapon()
     {
         int i = 0;
         foreach(Transform weapon in transform)
         {
-            if(i==selectedWeapon)
+            if(i == selectedWeapon)
             {
                 weapon.gameObject.SetActive(true);
             }
@@ -53,4 +59,6 @@ public class weaponChange : MonoBehaviour
             i++;
         }
     }
+
+
 }
