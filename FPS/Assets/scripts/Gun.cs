@@ -13,6 +13,8 @@ public class Gun : MonoBehaviour
     public LayerMask interactable;
     public bool isAutomatic=true;
     public int range = 100;
+    public float upRecoil = 0f;
+    public float sideRecoil = 0f;
 
     Animator animator;
 
@@ -41,22 +43,24 @@ public class Gun : MonoBehaviour
 
     void shoot()
     {
+        transform.parent.transform.parent.GetComponent<MouseLook>().AddRecoil(upRecoil, Random.Range(-sideRecoil, sideRecoil));
+
         muzzleFlash.Play();
         RaycastHit hit;
         if (Physics.Raycast(cam.position, cam.forward, out hit, range, interactable))
         {
-            interact target=hit.transform.GetComponent<interact>();
+            interact target = hit.transform.GetComponent<interact>();
             target.Damage(damage);
             target.Hit(hit.point, Quaternion.LookRotation(hit.normal));
             Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
-            rb.AddForce(force * hit.normal*-1,ForceMode.Impulse);
+            if (rb != null)
+                rb.AddForce(force * hit.normal*-1,ForceMode.Impulse);
         }
 
     }
 
     private void OnEnable()
     {
-        animator.SetBool("onHand", true);
         nextTimeToShoot = Time.time + 0.5f;
     }
 }

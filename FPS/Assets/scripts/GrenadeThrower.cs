@@ -57,7 +57,7 @@ public class GrenadeThrower : MonoBehaviour
     private void OnDisable()
     {
         // cancelling the grenade if weapon is switched
-        if (grenade.transform.parent != null)
+        if (grenade != null && grenade.transform.parent != null)
         {
             Destroy(grenade);
         }
