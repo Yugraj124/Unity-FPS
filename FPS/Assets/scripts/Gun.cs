@@ -12,6 +12,8 @@ public class Gun : MonoBehaviour
     public float force = 15f;
     public LayerMask interactable;
     public bool isAutomatic=true;
+    public int clipSize = 30;
+    public float reloadTime = 1f;
     public int range = 100;
     public float upRecoil = 0f;
     public float sideRecoil = 0f;
@@ -20,16 +22,26 @@ public class Gun : MonoBehaviour
 
     float nextTimeToShoot = 0;
     bool canShoot=true;
+    bool isReloading = false;
+    int bullets;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        bullets = clipSize;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0) && Time.time >= nextTimeToShoot && (isAutomatic||canShoot))
+        if (isReloading)
+            return;
+        if (bullets <= 0)
+        {
+            StartCoroutine(OutOfAmmo());
+            return;
+        }
+        if (Input.GetMouseButton(0) && Time.time >= nextTimeToShoot && (isAutomatic||canShoot))
         {
             canShoot = false;
             nextTimeToShoot = Time.time + 1 / (float)fireRate;
@@ -44,7 +56,7 @@ public class Gun : MonoBehaviour
     void shoot()
     {
         transform.parent.transform.parent.GetComponent<MouseLook>().AddRecoil(upRecoil, Random.Range(-sideRecoil, sideRecoil));
-
+        bullets -= 1;
         muzzleFlash.Play();
         RaycastHit hit;
         if (Physics.Raycast(cam.position, cam.forward, out hit, range, interactable))
@@ -56,11 +68,20 @@ public class Gun : MonoBehaviour
             if (rb != null)
                 rb.AddForce(force * hit.normal*-1,ForceMode.Impulse);
         }
-
+        
     }
 
     private void OnEnable()
     {
         nextTimeToShoot = Time.time + 0.5f;
+        isReloading = false;
+    }
+
+    IEnumerator OutOfAmmo()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(reloadTime);
+        isReloading = false;
+        bullets = clipSize;
     }
 }
