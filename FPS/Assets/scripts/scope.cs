@@ -14,6 +14,16 @@ public class scope : MonoBehaviour
 
     int isScoped = 0;
     float originalFOV;
+
+    #region Properties
+
+    public int IsScoped
+    {
+        get { return isScoped; }
+    }
+
+    #endregion
+
     void Start()
     {
         animator = gameObject.GetComponent<Animator>();

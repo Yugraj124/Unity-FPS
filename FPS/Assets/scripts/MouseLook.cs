@@ -23,8 +23,8 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = sideRecoil + Input.GetAxis("Mouse X") * mouseSenstivity * Time.deltaTime;
-        float mouseY = upRecoil / 2f + Input.GetAxis("Mouse Y") * mouseSenstivity * Time.deltaTime;
+        float mouseX = sideRecoil / 3f + Input.GetAxis("Mouse X") * mouseSenstivity * Time.deltaTime;
+        float mouseY = upRecoil / 5f + Input.GetAxis("Mouse Y") * mouseSenstivity * Time.deltaTime;
 
         upRecoil -= upRecoilAmount;
         sideRecoil -= sideRecoilAmount;
@@ -51,7 +51,7 @@ public class MouseLook : MonoBehaviour
     {
         upRecoil = up;
         sideRecoil = side;
-        upRecoilAmount = up * Time.deltaTime * 20f;
-        sideRecoilAmount = side * Time.deltaTime * 20f;
+        upRecoilAmount = up * Time.deltaTime * 15f;
+        sideRecoilAmount = side * Time.deltaTime * 15f;
     }
 }
