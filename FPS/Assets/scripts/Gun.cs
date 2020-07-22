@@ -17,8 +17,11 @@ public class Gun : MonoBehaviour
     public int range = 100;
     public float upRecoil = 0f;
     public float sideRecoil = 0f;
+    public AudioClip shootingAudio;
 
+    scope _scope;
     Animator animator;
+    AudioSource audioSource;
 
     float nextTimeToShoot = 0;
     bool canShoot=true;
@@ -27,8 +30,11 @@ public class Gun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = transform.parent.GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
+        _scope = gameObject.GetComponent<scope>();
         bullets = clipSize;
+        
     }
 
     // Update is called once per frame
@@ -45,6 +51,7 @@ public class Gun : MonoBehaviour
         {
             canShoot = false;
             nextTimeToShoot = Time.time + 1 / (float)fireRate;
+            
             shoot();
         }
         if(Input.GetMouseButtonUp(0) && !isAutomatic)
@@ -55,6 +62,12 @@ public class Gun : MonoBehaviour
 
     void shoot()
     {
+        if (shootingAudio != null)
+            audioSource.PlayOneShot(shootingAudio);
+
+        if (_scope == null || _scope.IsScoped == 0)
+            animator.SetTrigger("shoot");
+
         transform.parent.transform.parent.GetComponent<MouseLook>().AddRecoil(upRecoil, Random.Range(-sideRecoil, sideRecoil));
         bullets -= 1;
         muzzleFlash.Play();
@@ -66,7 +79,7 @@ public class Gun : MonoBehaviour
             target.Hit(hit.point, Quaternion.LookRotation(hit.normal));
             Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
             if (rb != null)
-                rb.AddForce(force * hit.normal*-1,ForceMode.Impulse);
+                rb.AddForce(force * hit.normal*-1, ForceMode.Impulse);
         }
         
     }
