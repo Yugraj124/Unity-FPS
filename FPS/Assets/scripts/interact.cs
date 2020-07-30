@@ -17,8 +17,12 @@ public class interact : MonoBehaviour
             if (Health <= 0)
             {
                 Destroy(gameObject);
-                GameObject explode = Instantiate(explosion, transform.position, transform.rotation);
-                Destroy(explode, 2.5f);
+                if(explosion!=null)
+                {
+                    GameObject explode = Instantiate(explosion, transform.position, transform.rotation);
+                    Destroy(explode, 2.5f);
+
+                }
             }
         }
     }
