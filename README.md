@@ -1,5 +1,5 @@
 # Unity-FPS
-A test FPS game in Unity
+A amazing FPS game in Unity
 
 
 ## Added Features
