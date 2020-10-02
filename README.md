@@ -8,4 +8,6 @@ A amazing FPS game in Unity
   -ak-47<br>
   -sniper<br>
   -pistol<br>
+meelee weapons<br>
+  -machette<br>
 a FPS control<br>
